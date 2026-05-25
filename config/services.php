@@ -40,5 +40,10 @@ return [
         'publick_api_key' => env('PAYMONGO_PUBLIC_API_KEY'),
         'secret_api_key' => env('PAYMONGO_SECRET_API_KEY'),
         'webhook_secret_key' => env('PAYMONGO_WEBHOOK_SECRET_KEY')
-    ]
+    ],
+    'payment_redirects' => [
+        'success' => env('PAYMENT_SUCCESS_URL'),
+        'failed' => env('PAYMENT_FAILED_URL'),
+        'cancelled' => env('PAYMENT_CANCELLED_URL')
+    ],
 ];

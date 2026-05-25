@@ -7,3 +7,10 @@ Route::get('/', function () {
 });
 
 
+Route::get('/checkout-page', function () {
+    return view('checkout');
+});
+
+Route::get('/success', function () {});
+
+Route::get('/failed', function () {});
