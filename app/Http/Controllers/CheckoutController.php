@@ -14,6 +14,7 @@ class CheckoutController extends Controller {
 
         $secretKey = ''; // @todo: retrieve secret key from ENV
         $apiUrl = ''; // @todo: Retrieve paymongo api url from ENV
+        $checkoutSessionUrl = 'checkout_sessions';
 
         $client = new Client();
 
@@ -26,10 +27,20 @@ class CheckoutController extends Controller {
             'json' => $payload,
         ]);
 
-        $response = $client->request('POST', $apiUrl);
+        $response = $client->request('POST', $apiUrl . '/' . $checkoutSessionUrl);
 
-        $array = $this->parseToArray((string) $response->getBody());
+        $result = $this->parseToArray((string) $response->getBody());
+
+        return $this->response($result);
     }
+
+    private function response($rawResponse) {
+        return [
+            'redirect_url' => $rawResponse['data']['attributes']['checkout_url'],
+            'checkout_id' => $rawResponse['data']['id']
+        ];
+    }
+
 
     private function parseToArray($data) {
         return json_decode($data);

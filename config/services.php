@@ -36,7 +36,7 @@ return [
     ],
     'paymongo' => [
         'mode' => env('PAYMONGO_MODE', 'test'),
-        'url' => 'https://api.paymongo.com',
+        'url' => 'https://api.paymongo.com/v1',
         'publick_api_key' => env('PAYMONGO_PUBLIC_API_KEY'),
         'secret_api_key' => env('PAYMONGO_SECRET_API_KEY'),
         'webhook_secret_key' => env('PAYMONGO_WEBHOOK_SECRET_KEY')
