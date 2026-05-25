@@ -31,14 +31,14 @@
         </div>
 
         <div>
-            <button type="button" id="checkout-btn">Proceed Payment</button>
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border-2 cursor-pointer" id="checkout-btn">Proceed Payment</button>
         </div>
 
         <script>
         document.getElementById('checkout-btn').addEventListener('click', async () => {
             try {
                 const response = await fetch('/api/checkout', {
-                    method: 'GET',
+                    method: 'POST',
                     headers: {
                         'Accept': 'application/json'
                     }
