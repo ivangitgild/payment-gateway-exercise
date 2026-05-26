@@ -40,7 +40,7 @@ class FilesController extends Controller
         );
 
         $file = File::create([
-            'disk' => 'private',
+            'disk' => 'public',
             'bucket' => $bucket,
             'path' => $path,
             'filename' => $filename,
