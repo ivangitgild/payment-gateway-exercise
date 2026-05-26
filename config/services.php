@@ -46,4 +46,6 @@ return [
         'failed' => env('PAYMENT_FAILED_URL'),
         'cancelled' => env('PAYMENT_CANCELLED_URL')
     ],
+
+    'service_header' => env('SERVICE_HEADER', 'ilovedora143')
 ];

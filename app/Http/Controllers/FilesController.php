@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FilesController extends Controller
 {
@@ -35,7 +36,7 @@ class FilesController extends Controller
         $path = $uploadedFile->storeAs(
             $bucket,
             $filename,
-            'private'
+            'public'
         );
 
         $file = File::create([
@@ -51,6 +52,7 @@ class FilesController extends Controller
         return response()->json([
             'id' => $file->id,
             'filename' => $file->original_name,
+            'path' => $file->path,
             'bucket' => $file->bucket,
         ]);
     }

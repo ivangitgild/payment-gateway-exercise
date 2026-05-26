@@ -5,6 +5,7 @@ use App\Http\Controllers\FilesController;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\PaymongoWebhook;
+use App\Http\Middleware\VerifyCode;
 use Illuminate\Http\Request;
 
 Route::middleware([ForceJsonResponse::class, Cors::class])->group(function () {
@@ -12,8 +13,13 @@ Route::middleware([ForceJsonResponse::class, Cors::class])->group(function () {
         logger()->info($request->all());
     });
 
+
     Route::post('checkout', [CheckoutController::class, 'store']);
-    Route::get('/files/{id}/download', [FilesController::class, 'download']);
-    Route::post('/files/upload', [FilesController::class, 'upload']);
+
+    Route::middleware([VerifyCode::class])->group(function () {
+
+        Route::get('/files/{id}/download', [FilesController::class, 'download']);
+        Route::post('/files/upload', [FilesController::class, 'upload']);
+    });
 });
 
