@@ -18,40 +18,8 @@
         @endif
     </head>
     <body>
-        <div class="flex flex-col gap-4">
-            <div class="">
-                <div>Product Name: <span>Test Product 1</span></div>
-                <div>Amount: <span>1000.00</span></div>
-            </div>
-
-            <div class="">
-                <div>Product Name: <span>Test Product 1</span></div>
-                <div>Amount: <span>1500.00</span></div>
-            </div>
-        </div>
-
-        <div>
-            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded border-2 cursor-pointer" id="checkout-btn">Proceed Payment</button>
-        </div>
-
-        <script>
-        document.getElementById('checkout-btn').addEventListener('click', async () => {
-            try {
-                const response = await fetch('/api/checkout', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-
-                window.location.href = data['data']['attributes']['checkout_url']
-            } catch (error) {
-                console.error(error);
-            }
-        });
-        </script>
+        <h1>Success Page</h1>
+        <p>Your order is complete</p>
     </body>
 
 </html>

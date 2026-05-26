@@ -10,15 +10,30 @@ class CheckoutController extends Controller {
     public function store(Request $request) {
 
         // @todo: Please supply any details
-        $payload = $this->getRequestData();
 
-        $secretKey = ''; // @todo: retrieve secret key from ENV
-        $apiUrl = ''; // @todo: Retrieve paymongo api url from ENV
+        $secretKey = config('services.paymongo.secret_api_key'); // @todo: retrieve secret key from ENV
+        $apiUrl = config('services.paymongo.url'); // @todo: Retrieve paymongo api url from ENV
         $checkoutSessionUrl = 'checkout_sessions';
+
+        $payload = $this->getRequestData(
+            'randomid123',
+
+            2000,
+            [
+                'email' => 'test@gmail.com',
+                'phone' => '09267315323',
+                'fullname' => 'Ivna Gonzales'
+            ],
+            50,
+            [
+                'qrph'
+            ]
+        );
+
 
         $client = new Client();
 
-        $client->setGuzzleOptions([
+        $response = $client->request('POST', $apiUrl . '/' . $checkoutSessionUrl, [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-type' => 'application/json',
@@ -27,11 +42,9 @@ class CheckoutController extends Controller {
             'json' => $payload,
         ]);
 
-        $response = $client->request('POST', $apiUrl . '/' . $checkoutSessionUrl);
-
         $result = $this->parseToArray((string) $response->getBody());
 
-        return $this->response($result);
+        return $result;
     }
 
     private function response($rawResponse) {
@@ -50,7 +63,7 @@ class CheckoutController extends Controller {
         return [
             'data' => [
                 'attributes' => [
-                    'cancel_url' =>  config('services.payment_redirects.cancelled') . '/' . $code,
+                    'cancel_url' =>  config('services.payment_redirects.cancelled') . '?code=' . $code,
                     'line_items' => [
                         [
                             'amount' => (int) number_format($totalAmount * 100, 0, '', ''),
@@ -74,7 +87,7 @@ class CheckoutController extends Controller {
                     'reference_number' => $code,
                     'send_email_receipt' => true,
                     'show_description' => false,
-                    'success_url' => config('services.payment_redirects.success') . '/' . $code,
+                    'success_url' => config('services.payment_redirects.success') . '?code=' . $code,
                 ]
             ]
         ];

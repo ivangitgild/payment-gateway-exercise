@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FilesController;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\PaymongoWebhook;
@@ -12,6 +13,7 @@ Route::middleware([ForceJsonResponse::class, Cors::class])->group(function () {
     });
 
     Route::post('checkout', [CheckoutController::class, 'store']);
-
+    Route::get('/files/{id}/download', [FilesController::class, 'download']);
+    Route::post('/files/upload', [FilesController::class, 'upload']);
 });
 
