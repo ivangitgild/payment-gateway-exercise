@@ -64,9 +64,16 @@ class FilesController extends Controller
             abort(404, 'File not found');
         }
 
-        return Storage::disk($file->disk)->download(
-            $file->path,
-            $file->original_name
-        );
+        // return Storage::disk($file->disk)->download(
+        //     $file->path,
+        //     $file->original_name
+        // );
+
+        return response()->json([
+            'id' => $file->id,
+            'filename' => $file->original_name,
+            'path' => Storage::url($file->path),
+            'bucket' => $file->bucket,
+        ]);
     }
 }
